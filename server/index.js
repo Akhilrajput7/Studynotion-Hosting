@@ -56,6 +56,17 @@ app.get("/", (req, res) => {
 	});
 });
 
+// Express example
+app.get('/catalog', async (req, res) => {
+  try {
+    const data = await getCatalogData();
+    res.json(data);
+  } catch (err) {
+    console.error('Catalog API Error:', err); // ← see the real error
+    res.status(500).json({ message: err.message });
+  }
+});
+
 // Listening to the server
 app.listen(PORT, () => {
 	console.log(`App is listening at ${PORT}`);

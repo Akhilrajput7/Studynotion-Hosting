@@ -18,20 +18,46 @@ function Catalog() {
   const [active, setActive] = useState(1)
   const [catalogPageData, setCatalogPageData] = useState(null)
   const [categoryId, setCategoryId] = useState("")
-  // Fetch All Categories
-  useEffect(() => {
+
+ // Fetch All Categories
+  // useEffect(() => {;(async () => {
+  //     try {
+  //       const res = await apiConnector("GET", categories.CATEGORIES_API)
+
+  //       const category_id = res?.data?.data?.filter(
+  //         (ct) => ct.name.split(" ").join("-").toLowerCase() === catalogName
+  //       )[0]._id
+  //       setCategoryId(category_id)
+  //     } catch (error) {
+  //       console.log("Could not fetch Categories.", error)
+  //     }
+  //   })()
+  // }, [catalogName])
+
+  // changes
+
+  useEffect(() => { 
     ;(async () => {
       try {
         const res = await apiConnector("GET", categories.CATEGORIES_API)
-        const category_id = res?.data?.data?.filter(
+        const matchedCategory = res?.data?.data?.find(
           (ct) => ct.name.split(" ").join("-").toLowerCase() === catalogName
-        )[0]._id
-        setCategoryId(category_id)
+        )
+        if (!matchedCategory) {
+          console.log("No matching category found for:", catalogName)
+          return
+        }
+        console.log("URL param:", catalogName)
+         
+        console.log("Category names from API:", res?.data?.data?.map(ct =>ct.name.split(" ").join("-").toLowerCase()))
+
+        setCategoryId(matchedCategory._id)
       } catch (error) {
         console.log("Could not fetch Categories.", error)
       }
     })()
   }, [catalogName])
+
   useEffect(() => {
     if (categoryId) {
       ;(async () => {
@@ -59,8 +85,8 @@ function Catalog() {
   return (
     <>
       {/* Hero Section */}
-      <div className=" box-content bg-richblack-800 px-4">
-        <div className="mx-auto flex min-h-[260px] max-w-maxContentTab flex-col justify-center gap-4 lg:max-w-maxContent ">
+      <div className="box-content bg-richblack-800 px-4">
+        <div className="mx-auto flex min-h-[260px] max-w-maxContentTab flex-col justify-center gap-4 lg:max-w-maxContent">
           <p className="text-sm text-richblack-300">
             {`Home / Catalog / `}
             <span className="text-yellow-25">
@@ -77,7 +103,7 @@ function Catalog() {
       </div>
 
       {/* Section 1 */}
-      <div className=" mx-auto box-content w-full max-w-maxContentTab px-4 py-12 lg:max-w-maxContent">
+      <div className="mx-auto box-content w-full max-w-maxContentTab px-4 py-12 lg:max-w-maxContent">
         <div className="section_heading">Courses to get you started</div>
         <div className="my-4 flex border-b border-b-richblack-600 text-sm">
           <p
@@ -108,7 +134,7 @@ function Catalog() {
         </div>
       </div>
       {/* Section 2 */}
-      <div className=" mx-auto box-content w-full max-w-maxContentTab px-4 py-12 lg:max-w-maxContent">
+      <div className="mx-auto box-content w-full max-w-maxContentTab px-4 py-12 lg:max-w-maxContent">
         <div className="section_heading">
           Top courses in {catalogPageData?.data?.differentCategory?.name}
         </div>
@@ -120,7 +146,7 @@ function Catalog() {
       </div>
 
       {/* Section 3 */}
-      <div className=" mx-auto box-content w-full max-w-maxContentTab px-4 py-12 lg:max-w-maxContent">
+      <div className="mx-auto box-content w-full max-w-maxContentTab px-4 py-12 lg:max-w-maxContent">
         <div className="section_heading">Frequently Bought</div>
         <div className="py-8">
           <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
