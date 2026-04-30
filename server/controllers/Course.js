@@ -32,6 +32,7 @@ exports.createCourse = async (req, res) => {
 
     console.log("tag", tag)
     console.log("instructions", instructions)
+  
 
     // Check if any of the required fields are missing
     if (
