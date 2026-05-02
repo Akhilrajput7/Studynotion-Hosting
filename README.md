@@ -18,10 +18,10 @@ To create an Admin account first sign up with a student or instructor account th
 Installation
 Clone the repository to your local machine.
 
-git clone https://github.com/aniket-24/Study-Notion.git
+git clone https://github.com/Akhilrajput7/Studynotion-Hosting
 Install the required packages.
 
-cd Study-Notion-master
+cd Study-Notion
 npm install
 
 cd server
